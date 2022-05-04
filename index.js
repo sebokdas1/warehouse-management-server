@@ -35,6 +35,22 @@ async function run() {
             res.send(item);
         });
 
+        //Update single item
+        app.put('/item/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedItem = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+
+                    quantity: updatedItem.quantity
+                }
+            };
+            const result = await itemCollection.updateOne(filter, updateDoc, options);
+            res.send(result)
+        });
+
         //Post new item
         app.post('/item', async (req, res) => {
             const newItem = req.body;
