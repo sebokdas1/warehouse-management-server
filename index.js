@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 
-
+//For mongodb connection
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.zfupy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
@@ -43,12 +43,19 @@ async function run() {
             const options = { upsert: true };
             const updateDoc = {
                 $set: {
-
                     quantity: updatedItem.quantity
                 }
             };
             const result = await itemCollection.updateOne(filter, updateDoc, options);
             res.send(result)
+        });
+
+        //Delete Single item
+        app.delete('/item/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await itemCollection.deleteOne(query);
+            res.send(result);
         });
 
         //Post new item
@@ -57,7 +64,6 @@ async function run() {
             const result = await itemCollection.insertOne(newItem);
             res.send(result);
         });
-
 
 
     }
