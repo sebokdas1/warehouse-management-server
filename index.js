@@ -18,6 +18,7 @@ async function run() {
     try {
         await client.connect();
         const itemCollection = client.db("nutrioWarehouse").collection("item");
+        const myItemCollection = client.db("nutrioWarehouse").collection("myItem");
 
         //Find multiple data
         app.get('/item', async (req, res) => {
@@ -62,6 +63,13 @@ async function run() {
         app.post('/item', async (req, res) => {
             const newItem = req.body;
             const result = await itemCollection.insertOne(newItem);
+            res.send(result);
+        });
+
+        //Post to myItem
+        app.post('/myItem', async (req, res) => {
+            const myItem = req.body;
+            const result = await myItemCollection.insertOne(myItem);
             res.send(result);
         });
 
