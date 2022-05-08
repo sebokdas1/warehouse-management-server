@@ -76,11 +76,11 @@ async function run() {
         });
 
         //Post data to myItem
-        app.post('/myItem', async (req, res) => {
-            const myItem = req.body;
-            const result = await myItemCollection.insertOne(myItem);
-            res.send(result);
-        });
+        // app.post('/myItem', async (req, res) => {
+        //     const myItem = req.body;
+        //     const result = await myItemCollection.insertOne(myItem);
+        //     res.send(result);
+        // });
 
 
     }
