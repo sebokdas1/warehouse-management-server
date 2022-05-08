@@ -18,7 +18,7 @@ async function run() {
     try {
         await client.connect();
         const itemCollection = client.db("nutrioWarehouse").collection("item");
-        const myItemCollection = client.db("nutrioWarehouse").collection("myItem");
+        // const myItemCollection = client.db("nutrioWarehouse").collection("myItem");
 
         //Find multiple data
         app.get('/item', async (req, res) => {
@@ -67,10 +67,10 @@ async function run() {
         });
 
         //Get data from myItem
-        app.get('/myItem', async (req, res) => {
+        app.get('/myitem', async (req, res) => {
             const email = req.query.email;
             const query = { email: email };
-            const cursor = myItemCollection.find(query);
+            const cursor = itemCollection.find(query);
             const myItems = await cursor.toArray();
             res.send(myItems);
         });
